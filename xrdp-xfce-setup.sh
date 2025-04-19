@@ -1,30 +1,26 @@
 #!/bin/bash
 
-# Create script
-# nano xrdp-xfce-setup.sh
-# Change ownership
-# sudo chown $USER:$USER xrdp-xfce-setup.sh
-# Make executable
-# chmod +x xrdp-xfce-setup.sh
-# Execute
-# ./xrdp-xfce-setup.sh
-# Reboot
-# sudo reboot
+# Setup script for Ubuntu 22.04: xfce4 + xrdp + Xvnc
+# This script disables Wayland, installs required packages, and configures startup files.
 
-# Update packages and install required components
+echo "[1/6] Installing required packages..."
 sudo apt update
-sudo apt install -y xfce4 xrdp lightdm tigervnc-standalone-server dbus-x11
+sudo apt install -y xfce4 xrdp tigervnc-standalone-server dbus-x11
 
-# Set lightdm as the default display manager (for GUI login)
-sudo debconf-set-selections <<< "lightdm shared/default-x-display-manager select lightdm"
-sudo dpkg-reconfigure -f noninteractive lightdm
+echo "[2/6] Disabling Wayland (required for xrdp)..."
+sudo sed -i 's/^#WaylandEnable=false/WaylandEnable=false/' /etc/gdm3/custom.conf
+if ! grep -q "^WaylandEnable=false" /etc/gdm3/custom.conf; then
+  sudo bash -c 'echo -e "\n[daemon]\nWaylandEnable=false" >> /etc/gdm3/custom.conf'
+fi
 
-# Write session start command to ~/.xsession
+echo "[3/6] Creating .xsession and .xstartup..."
+
+# .xsession to start xfce4 when xrdp session begins
 echo "exec startxfce4" > ~/.xsession
 chmod +x ~/.xsession
-sudo chown $USER:$USER ~/.xsession
+sudo chown "$USER:$USER" ~/.xsession
 
-# Create ~/.vnc/xstartup to ensure xfce4 is launched via Xvnc
+# .vnc/xstartup for VNC session startup
 mkdir -p ~/.vnc
 cat > ~/.vnc/xstartup <<'EOF'
 #!/bin/sh
@@ -34,16 +30,16 @@ exec startxfce4
 EOF
 chmod +x ~/.vnc/xstartup
 
-# Set up /etc/xrdp/startwm.sh with a minimal configuration (fallback if needed)
+echo "[4/6] Configuring /etc/xrdp/startwm.sh..."
 sudo bash -c 'cat > /etc/xrdp/startwm.sh' <<'EOF'
 #!/bin/sh
 exec startxfce4
 EOF
 sudo chmod +x /etc/xrdp/startwm.sh
 
-# Add Xvnc session definition to /etc/xrdp/xrdp.ini (if not already present)
+echo "[5/6] Adding Xvnc session section to /etc/xrdp/xrdp.ini if not present..."
 if ! grep -q "\[xvnc\]" /etc/xrdp/xrdp.ini; then
-sudo bash -c 'cat >> /etc/xrdp/xrdp.ini' <<'EOF'
+  sudo bash -c 'cat >> /etc/xrdp/xrdp.ini' <<'EOF'
 
 [xvnc]
 name=Xvnc
@@ -55,8 +51,12 @@ port=-1
 EOF
 fi
 
-# Enable and restart xrdp service
+echo "[6/6] Restarting xrdp service..."
 sudo systemctl enable xrdp
 sudo systemctl restart xrdp
 
-echo "Xvnc session setup complete! Please select 'Xvnc' when connecting via enhanced session."
+echo
+echo "Setup completed."
+echo "Please reboot the system to apply Wayland configuration changes:"
+echo "    sudo reboot"
+echo "After reboot, use 'Xvnc' session when connecting via Remote Desktop."
