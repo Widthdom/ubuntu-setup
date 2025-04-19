@@ -14,11 +14,14 @@ sudo apt install -y code
 # 3. Install OpenVPN
 sudo apt install -y openvpn
 
-# 4. Get desktop directory
+# 4. Install LXTerminal
+sudo apt install -y lxterminal
+
+# 5. Get desktop directory
 DESKTOP_DIR=$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")
 mkdir -p "$DESKTOP_DIR"
 
-# 5. Google Chrome desktop shortcut
+# 6. Google Chrome desktop shortcut
 cat > "$DESKTOP_DIR/google-chrome.desktop" <<EOF
 [Desktop Entry]
 Name=Google Chrome
@@ -29,7 +32,7 @@ Categories=Network;WebBrowser;
 Terminal=false
 EOF
 
-# 6. Visual Studio Code desktop shortcut
+# 7. Visual Studio Code desktop shortcut
 cat > "$DESKTOP_DIR/vscode.desktop" <<EOF
 [Desktop Entry]
 Name=Visual Studio Code
@@ -40,18 +43,29 @@ Categories=Development;IDE;
 Terminal=false
 EOF
 
-# 7. OpenVPN terminal launcher shortcut (requires config)
+# 8. OpenVPN terminal launcher shortcut (requires config)
 cat > "$DESKTOP_DIR/openvpn.desktop" <<EOF
 [Desktop Entry]
 Name=OpenVPN Terminal
-Exec=gnome-terminal -- bash -c "sudo openvpn --config /etc/openvpn/client.conf; exec bash"
+Exec=lxterminal --command "sudo openvpn --config /etc/openvpn/client.conf; exec bash"
 Icon=utilities-terminal
 Type=Application
 Categories=Network;
 Terminal=false
 EOF
 
-# 8. Make shortcuts executable
+# 9. LXTerminal desktop shortcut
+cat > "$DESKTOP_DIR/lxterminal.desktop" <<EOF
+[Desktop Entry]
+Name=LXTerminal
+Exec=lxterminal
+Icon=utilities-terminal
+Type=Application
+Categories=System;TerminalEmulator;
+Terminal=false
+EOF
+
+# 10. Make all shortcuts executable
 chmod +x "$DESKTOP_DIR"/*.desktop
 
 echo "Done: Shortcuts have been created in $DESKTOP_DIR."
