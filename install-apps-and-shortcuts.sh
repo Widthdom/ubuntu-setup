@@ -55,9 +55,12 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 EOF
 
-# 11. Ensure fcitx starts automatically (via .xprofile)
-if ! grep -q "fcitx-autostart" ~/.xprofile 2>/dev/null; then
-echo "fcitx-autostart > /dev/null 2>&1 &" >> ~/.xprofile
-fi
+# 11. Also ensure environment and fcitx startup in ~/.xprofile
+cat > ~/.xprofile <<EOF
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+fcitx-autostart > /dev/null 2>&1 &
+EOF
 
 echo "Japanese input environment configured. Please log out and log in again to enable fcitx."
