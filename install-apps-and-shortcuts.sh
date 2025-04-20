@@ -45,13 +45,19 @@ echo "Setup complete. Shortcuts have been created in $DESKTOP_DIR."
 # 8. Install Japanese IME (fcitx-mozc)
 sudo apt install -y fcitx-mozc fonts-noto-cjk
 
-# 9. Set environment variables for fcitx
-if ! grep -q "fcitx" ~/.xprofile 2>/dev/null; then
-cat >> ~/.xprofile <<EOF
+# 9. Set fcitx as default input method
+im-config -n fcitx
+
+# 10. Write environment variables into ~/.xsessionrc
+cat > ~/.xsessionrc <<EOF
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 EOF
+
+# 11. Ensure fcitx starts automatically (via .xprofile)
+if ! grep -q "fcitx-autostart" ~/.xprofile 2>/dev/null; then
+echo "fcitx-autostart > /dev/null 2>&1 &" >> ~/.xprofile
 fi
 
-echo "Japanese input environment installed. You may need to log out and log back in for input method to take effect."
+echo "Japanese input environment configured. Please log out and log in again to enable fcitx."
