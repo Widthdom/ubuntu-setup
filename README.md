@@ -203,7 +203,7 @@ smb://[サーバのIPアドレス]
 ```
 ### 環境を削除する場合
   - Hyper-V マネージャーから仮想マシンを削除
-  - 以下に仮想ハードディスクファイルが残るので削除
+  - 以下に仮想ハードディスクファイル（.vhdx）が残るので削除
 ```
 C:\ProgramData\Microsoft\Windows\Virtual Hard Disks
 ```
