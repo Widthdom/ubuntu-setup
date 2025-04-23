@@ -5,7 +5,7 @@
 
 echo "[1/6] Installing required packages..."
 sudo apt update
-sudo apt install -y xfce4 xrdp tigervnc-standalone-server dbus-x11 xfce4-terminal
+sudo apt install -y xfce4 xrdp tigervnc-standalone-server dbus-x11 xfce4-terminal fcitx-mozc fonts-noto-cjk
 
 echo "[2/6] Disabling Wayland (required for xrdp)..."
 sudo sed -i 's/^#WaylandEnable=false/WaylandEnable=false/' /etc/gdm3/custom.conf
@@ -59,4 +59,4 @@ echo
 echo "Setup completed."
 echo "Please reboot the system to apply Wayland configuration changes:"
 echo "    sudo reboot"
-echo "After reboot, use 'Xvnc' session when connecting via Remote Desktop."
+echo "After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc.""

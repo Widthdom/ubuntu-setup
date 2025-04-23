@@ -2,7 +2,7 @@
 
 # 1. Install required packages
 sudo apt update
-sudo apt install -y xdg-user-dirs openvpn fcitx-mozc fonts-noto-cjk
+sudo apt install -y xdg-user-dirs openvpn
 
 # 2. Set xfce4-terminal as the default terminal emulator for file manager actions like "Open Terminal Here"
 mkdir -p ~/.config/xfce4
@@ -102,4 +102,4 @@ EOF
 
 sudo chmod +x /etc/xrdp/startwm.sh
 
-echo "Setup complete. Please log out and log in again via XRDP. Then launch fcitx-configtool and add Mozc."
+echo "Setup complete."
