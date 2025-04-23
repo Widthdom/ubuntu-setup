@@ -10,14 +10,17 @@ cat <<EOF > ~/.config/xfce4/helpers.rc
 TerminalEmulator=xfce4-terminal
 EOF
 
-# 3. Install Google Chrome
+# 3. Set gedit as the default text editor for plain text files
+xdg-mime default gedit.desktop text/plain
+
+# 4. Install Google Chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
 sudo apt install -y /tmp/chrome.deb
 
-# 4. Install Visual Studio Code (Snap version)
+# 5. Install Visual Studio Code (Snap version)
 sudo snap install code --classic
 
-# 5. Create desktop shortcuts
+# 6. Create desktop shortcuts
 DESKTOP_DIR=$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")
 mkdir -p "$DESKTOP_DIR"
 
@@ -51,6 +54,16 @@ Categories=Network;
 Terminal=false
 EOF
 
+cat > "$DESKTOP_DIR/firefox.desktop" <<EOF
+[Desktop Entry]
+Name=Firefox
+Exec=/usr/bin/firefox
+Icon=firefox
+Type=Application
+Categories=Network;WebBrowser;
+Terminal=false
+EOF
+
 cat > "$DESKTOP_DIR/google-chrome.desktop" <<EOF
 [Desktop Entry]
 Name=Google Chrome
@@ -73,10 +86,10 @@ EOF
 
 chmod +x "$DESKTOP_DIR"/*.desktop
 
-# 6. Set fcitx as the default input method
+# 7. Set fcitx as the default input method
 im-config -n fcitx
 
-# 7. Configure input environment for XRDP sessions
+# 8. Configure input environment for XRDP sessions
 sudo tee /etc/xrdp/startwm.sh > /dev/null <<'EOF'
 #!/bin/sh
 export GTK_IM_MODULE=fcitx
