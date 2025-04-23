@@ -91,7 +91,7 @@ sudo reboot
 - 青色の背景のログイン画面が表示されたら、デフォルト「Xorg」となっているプルダウンから「Xvnc」を選び、ユーザ名、パスワードを入力してログイン
 
 ### xfce Terminal を起動
-- 左上の "アプリケーション" メニューから **Xfce Terminal** を起動
+- 左上の "Application" メニューから **Xfce Terminal** を起動
 
 ### 日本語入力（Mozc）設定
 ```bash
