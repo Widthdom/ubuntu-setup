@@ -15,6 +15,16 @@ sudo snap install code --classic
 DESKTOP_DIR=$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")
 mkdir -p "$DESKTOP_DIR"
 
+cat > "$DESKTOP_DIR/xfce-terminal.desktop" <<EOF
+[Desktop Entry]
+Name=Xfce Terminal
+Exec=xfce4-terminal
+Icon=utilities-terminal
+Type=Application
+Categories=System;TerminalEmulator;
+Terminal=false
+EOF
+
 cat > "$DESKTOP_DIR/gedit.desktop" <<EOF
 [Desktop Entry]
 Name=Text Editor
@@ -24,7 +34,6 @@ Type=Application
 Categories=Utility;TextEditor;
 Terminal=false
 EOF
-
 
 cat > "$DESKTOP_DIR/remmina.desktop" <<EOF
 [Desktop Entry]
