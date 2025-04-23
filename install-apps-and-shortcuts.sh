@@ -6,7 +6,7 @@ sudo apt install -y xdg-user-dirs openvpn
 
 # 2. Set xfce4-terminal as the default terminal emulator for file manager actions like "Open Terminal Here"
 mkdir -p ~/.config/xfce4
-cat <<EOF > ~/.config/xfce4/helpers.rc
+cat > ~/.config/xfce4/helpers.rc <<'EOF'
 TerminalEmulator=xfce4-terminal
 EOF
 
@@ -24,7 +24,7 @@ sudo snap install code --classic
 DESKTOP_DIR=$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")
 mkdir -p "$DESKTOP_DIR"
 
-cat > "$DESKTOP_DIR/xfce-terminal.desktop" <<EOF
+cat > "$DESKTOP_DIR/xfce-terminal.desktop" <<'EOF'
 [Desktop Entry]
 Name=Xfce Terminal
 Exec=xfce4-terminal
@@ -34,7 +34,7 @@ Categories=System;TerminalEmulator;
 Terminal=false
 EOF
 
-cat > "$DESKTOP_DIR/gedit.desktop" <<EOF
+cat > "$DESKTOP_DIR/gedit.desktop" <<'EOF'
 [Desktop Entry]
 Name=Text Editor
 Exec=/usr/bin/gedit   
@@ -44,7 +44,7 @@ Categories=Utility;TextEditor;
 Terminal=false
 EOF
 
-cat > "$DESKTOP_DIR/remmina.desktop" <<EOF
+cat > "$DESKTOP_DIR/remmina.desktop" <<'EOF'
 [Desktop Entry]
 Name=Remote Desktop
 Exec=/usr/bin/remmina
@@ -54,7 +54,7 @@ Categories=Network;
 Terminal=false
 EOF
 
-cat > "$DESKTOP_DIR/firefox.desktop" <<EOF
+cat > "$DESKTOP_DIR/firefox.desktop" <<'EOF'
 [Desktop Entry]
 Name=Firefox
 Exec=/usr/bin/firefox
@@ -64,7 +64,7 @@ Categories=Network;WebBrowser;
 Terminal=false
 EOF
 
-cat > "$DESKTOP_DIR/google-chrome.desktop" <<EOF
+cat > "$DESKTOP_DIR/google-chrome.desktop" <<'EOF'
 [Desktop Entry]
 Name=Google Chrome
 Exec=/usr/bin/google-chrome-stable
@@ -74,7 +74,7 @@ Categories=Network;WebBrowser;
 Terminal=false
 EOF
 
-cat > "$DESKTOP_DIR/visual-studio-code.desktop" <<EOF
+cat > "$DESKTOP_DIR/visual-studio-code.desktop" <<'EOF'
 [Desktop Entry]
 Name=Visual Studio Code
 Exec=/snap/bin/code

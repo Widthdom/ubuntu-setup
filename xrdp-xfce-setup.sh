@@ -16,7 +16,14 @@ fi
 echo "[3/6] Creating .xsession and .xstartup..."
 
 # .xsession to start xfce4 when xrdp session begins
-echo "exec startxfce4" > ~/.xsession
+cat > ~/.xsession <<'EOF'
+#!/bin/sh
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+fcitx-autostart &
+exec startxfce4
+EOF
 chmod +x ~/.xsession
 sudo chown "$USER:$USER" ~/.xsession
 
@@ -59,4 +66,4 @@ echo
 echo "Setup completed."
 echo "Please reboot the system to apply Wayland configuration changes:"
 echo "    sudo reboot"
-echo "After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc."
+echo "After reboot, use 'Xvnc' session when connecting via Remote Desktop."

@@ -65,7 +65,7 @@ Windows の Hyper-V 機能が無効になっている場合は、以下の手順
 ---
 
 ## 4. 基本セッションでの準備
-左上の "Application" メニューから **Terminal** を起動
+左上の "Activities" を押下し、入力域に「ter」と入力して表示された候補から選んで **Terminal** を起動
 ### アップデートが可能なパッケージのリストを更新
 Terminalにて以下のコマンドを実行
 ```bash
@@ -88,6 +88,10 @@ cd ubuntu-setup
 ### `xrdp-xfce-setup.sh` を実行（リモート接続環境の構築）し再起動
 Terminalにて以下のコマンドを実行
 ```bash
+chmod +x ./xrdp-xfce-setup.sh
+```
+Terminalにて以下のコマンドを実行
+```bash
 ./xrdp-xfce-setup.sh
 ```
 上記スクリプトは以下を自動で実行する
@@ -96,9 +100,17 @@ Terminalにて以下のコマンドを実行
 - Wayland 無効化
 - リモートデスクトップ用の起動設定
 
-実行後の表示
+#### スクリプトの処理途中で「lightdm を設定しています」のウィンドウが表示されるのでEnter
+#### 「Default display manager」のウィンドウが表示されるので矢印キーでgdm3 → lightdmに変更し、Enter
+#### 「システムプログラムの問題が見つかりました」のダイアログにはCancelで応答
 ```
-After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc.
+処理中にエラーが発生しました：
+ xrdp
+E: Sub-Process /usr/bin/dpkg returned an error code (1)
+```
+#### 上記エラーは無視
+```
+After reboot, use 'Xvnc' session when connecting via Remote Desktop.
 ```
 
 上記が表示されたら、続けて以下のコマンドを実行（再起動）
@@ -108,29 +120,20 @@ sudo reboot
 
 ---
 
-## 5. 拡張セッションの起動と入力設定
+## 5. 拡張セッションの起動
 
 ### Windows 側からリモート接続
 - **拡張セッションを開く（Xvnc）**
-- 解像度を調整する画面が表示されたら、適当なサイズを選択
-- 青色の背景のログイン画面が表示されたら、デフォルト「Xorg」となっているプルダウンから「Xvnc」を選び、ユーザ名、パスワードを入力してログイン
-
-### Xfce Terminal を起動
-- 左上の "Application" メニューから **Xfce Terminal** を起動
-
-### 日本語入力（Mozc）設定
-- Xfce Terminalにて以下のコマンドを実行
-```bash
-fcitx-configtool
-```
-- 設定画面が開くので、「＋」から **Mozc** を追加 → 適用
-- Ctrl + Space で英語/日本語入力を切り替えられるようになる
+- 解像度を調整する画面が表示されたら、適当なサイズを選択して接続（表示されない場合は、仮想マシン接続画面左上の「拡張セッション」ボタンを押下）
+- 青色の背景のログイン画面が表示されたら、デフォルト「Xorg」となっているプルダウンから「Xvnc」を選び、ユーザ名、パスワードを入力してOKを押下しログイン
+- 「System program problem detected」というダイアログにはCancelで応答
+- 「Update standard folders to current language?」というウィンドウには「Keep Old Names」で応答
 
 ---
 
 ## 6. アプリのインストールとショートカット作成
 ### Xfce Terminal を起動
-- 左上の "Application" メニューから **Xfce Terminal** を起動
+- 左上の "Applications" メニュー → "System" → **Xfce Terminal** を起動
 ### ubuntu-setup フォルダ内へ移動
 - Xfce Terminalにて以下のコマンドを実行
 ```bash
@@ -138,6 +141,10 @@ cd ~/ubuntu-setup
 ```
 
 ### `install-apps-and-shortcuts.sh` を実行
+- Xfce Terminalにて以下のコマンドを実行
+```bash
+chmod +x ./install-apps-and-shortcuts.sh
+```
 - Xfce Terminalにて以下のコマンドを実行
 ```bash
 ./install-apps-and-shortcuts.sh
@@ -155,8 +162,25 @@ Setup complete.
 と表示されたらセットアップ完了
 
 ---
+## 7. 日本語入力設定
 
-## 7. 注意事項・補足
+### Xfce Terminal を起動
+- 左上の "Applications" メニュー → "System" → **Xfce Terminal** を起動
+
+### 日本語入力（Mozc）設定
+- Xfce Terminalにて以下のコマンドを実行（拡張セッションでは、ホストと仮想マシンでコピー＆ペースト可能）
+```bash
+fcitx-configtool
+```
+- 「Input Method Configuration」ウィンドウが開くので、左下の「＋」ボタンを押下
+- 「Only Show Current Language」のチェックを外す
+- **Mozc Japanese** を選択 → OK
+- 「Input Method Configuration」ウィンドウを×ボタンで閉じる
+- Ctrl + Space で英語/日本語入力を切り替えられるようになる
+
+---
+
+## 8. 注意事項・補足
 
 ### 基本セッションについて
 - ホストと仮想マシンでコピー＆ペースト不可
@@ -171,8 +195,9 @@ Setup complete.
 ```bash
 df -h
 ```
+  - とくにFilesystem='/dev/sda1'のUse%に注意
 ### サーバとのファイル送受信について
-  - FileManagerのアドレスバーに以下のように入力することでアクセス可能
+  - File Managerのアドレスバーに以下のように入力することでアクセス可能
 ```
 smb://[サーバのIPアドレス]
 ```
