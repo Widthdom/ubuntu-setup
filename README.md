@@ -7,7 +7,7 @@
 
 ## 1. Hyper-V 機能の有効化手順
 
-Windows の Hyper-V 機能が無効になっている場合は、以下の手順で有効化する：
+Windows の Hyper-V 機能が無効になっている場合は、以下の手順で有効化する
 
 1. スタートメニューで「Windows の機能の有効化または無効化」と入力し起動
 2. 一覧の中から **「Hyper-V」** にチェックを入れる
@@ -30,7 +30,7 @@ Windows の Hyper-V 機能が無効になっている場合は、以下の手順
 1. [操作] → [クイック作成] を選択
 2. OS イメージは **Ubuntu 20.04** を選択
 3. オプションで仮想スイッチに **ExternalSwitch** を選択
-4. 作成後、仮想マシンの [設定] を開き、以下のように設定を変更：
+4. 作成後、仮想マシンの [設定] を開き、以下のように設定を変更
    - [メモリ] タブで、割り当てメモリを **4096MB（4GB）** に設定
    - 「動的メモリを使用する」のチェックを外す（固定メモリにする）
    - 設定を保存して閉じる
@@ -43,7 +43,7 @@ Windows の Hyper-V 機能が無効になっている場合は、以下の手順
 - 作成した仮想マシンをダブルクリックして起動
 
 ### 初期セットアップ
-- 表示される画面に従い、以下を設定：
+- 表示される画面に従い、以下を設定
   - コンピュータ名
   - ユーザー名
   - パスワード
@@ -52,36 +52,44 @@ Windows の Hyper-V 機能が無効になっている場合は、以下の手順
 ---
 
 ## 4. 基本セッションでの準備
-
-### ターミナルを起動して以下を実行
+左上の "Application" メニューから **Terminal** を起動
+### アップデートが可能なパッケージのリストを更新
+Terminalにて以下のコマンドを実行
 ```bash
 sudo apt update
+```
+- 実行中にパスワードを求められたら入力
+### Gitのインストール
+Terminalにて以下のコマンドを実行
+```bash
 sudo apt install -y git
 ```
 
 ### GitHub repositoryをclone
+Terminalにて以下のコマンドを実行
 ```bash
 git clone https://github.com/Widthdom/ubuntu-setup.git
 cd ubuntu-setup
 ```
 
-### `xrdp-xfce-setup.sh` を実行（GUI付きリモート接続環境の構築）
+### `xrdp-xfce-setup.sh` を実行（リモート接続環境の構築）し再起動
+Terminalにて以下のコマンドを実行
 ```bash
 ./xrdp-xfce-setup.sh
 ```
 
-このスクリプトは以下のことを自動で実行する：
+このスクリプトは以下を自動で実行する
 - xfce4 デスクトップ環境のインストール
 - xrdp + Xvnc の構成
 - Wayland 無効化
 - リモートデスクトップ用の起動設定
 
-### 実行後の表示：
+実行後の表示
 ```
 After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc.
 ```
 
-これが表示されたら、以下を実行：
+これが表示されたら、続けて以下のコマンドを実行（再起動）
 ```bash
 sudo reboot
 ```
@@ -99,27 +107,32 @@ sudo reboot
 - 左上の "Application" メニューから **Xfce Terminal** を起動
 
 ### 日本語入力（Mozc）設定
+- Xfce Terminalにて以下のコマンドを実行
 ```bash
 fcitx-configtool
 ```
-- GUIが起動するので、「＋」から **Mozc** を追加 → 適用
+- 設定画面が開くので、「＋」から **Mozc** を追加 → 適用
+- Ctrl + Space で英語/日本語入力を切り替えられるようになる
 
 ---
 
 ## 6. アプリのインストールとショートカット作成
-
+### Xfce Terminal を起動
+- 左上の "Application" メニューから **Xfce Terminal** を起動
 ### ubuntu-setup フォルダ内へ移動
+- Xfce Terminalにて以下のコマンドを実行
 ```bash
 cd ~/ubuntu-setup
 ```
 
 ### `install-apps-and-shortcuts.sh` を実行
+- Xfce Terminalにて以下のコマンドを実行
 ```bash
 ./install-apps-and-shortcuts.sh
 ```
 
 - 実行中にパスワードを求められたら入力
-- このスクリプトは以下を自動で実行する：
+- このスクリプトは以下を自動で実行する
   - OpenVPN, Google Chrome, Visual Studio Codeのインストール
   - Xfce Terminal, gedit（テキストエディタ）, Remmina（リモートデスクトップ）, Firefox, Google Chrome, Visual Studio Codeのショートカットをデスクトップに作成
   - fcitx（日本語入力）の既定設定
@@ -134,15 +147,15 @@ Setup complete.
 
 ## 7. 注意事項・補足
 
-- ファイルを右クリックしたときのメニューから「Open With \"Text Editor\"」を実行しても無反応：
+- ファイルを右クリックしたときのメニューから「Open With \"Text Editor\"」を実行しても無反応
   - 対象ファイルをテキストエディタのショートカットへドラッグ＆ドロップして開くことで運用回避可能
 
-- サーバとのファイルの送受信について：
-  - FileManagerのアドレスバーに以下のように入力することでアクセス可能：
+- サーバとのファイル送受信について
+  - FileManagerのアドレスバーに以下のように入力することでアクセス可能
     ```
     smb://[サーバのIPアドレス]
     ```
-- 環境を削除する場合：
+- 環境を削除する場合
   - Hyper-V マネージャーから仮想マシンを削除
   - 以下に仮想ハードディスクファイルが残るので削除する
     ```
