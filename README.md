@@ -152,14 +152,20 @@ Setup complete.
 - ファイルを右クリックしたときのメニューから「Open With \"Text Editor\"」を実行しても無反応
   - 対象ファイルをテキストエディタのショートカットへドラッグ＆ドロップして開くことで運用回避可能
 
+### 空き容量について
+- 容量が枯渇すると仮想マシンが起動しなくなる
+  - 左上の "Application" メニューから Xfce Terminal を起動し、以下のコマンドで空き容量を確認すること
+```bash
+df -h
+```
 ### サーバとのファイル送受信について
   - FileManagerのアドレスバーに以下のように入力することでアクセス可能
-    ```
-    smb://[サーバのIPアドレス]
-    ```
+```
+smb://[サーバのIPアドレス]
+```
 ### 環境を削除する場合
   - Hyper-V マネージャーから仮想マシンを削除
-  - 以下に仮想ハードディスクファイルが残るので削除する
-    ```
-    C:\ProgramData\Microsoft\Windows\Virtual Hard Disks
-    ```
+  - 以下に仮想ハードディスクファイルが残るので削除
+```
+C:\ProgramData\Microsoft\Windows\Virtual Hard Disks
+```
