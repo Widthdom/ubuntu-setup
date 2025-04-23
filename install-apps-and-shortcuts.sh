@@ -15,6 +15,27 @@ sudo snap install code --classic
 DESKTOP_DIR=$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")
 mkdir -p "$DESKTOP_DIR"
 
+cat > "$DESKTOP_DIR/gedit.desktop" <<EOF
+[Desktop Entry]
+Name=Text Editor
+Exec=/usr/bin/gedit   
+Icon=org.gnome.gedit
+Type=Application
+Categories=Utility;TextEditor;
+Terminal=false
+EOF
+
+
+cat > "$DESKTOP_DIR/remmina.desktop" <<EOF
+[Desktop Entry]
+Name=Remote Desktop
+Exec=/usr/bin/remmina
+Icon=org.remmina.Remmina
+Type=Application
+Categories=Network;
+Terminal=false
+EOF
+
 cat > "$DESKTOP_DIR/google-chrome.desktop" <<EOF
 [Desktop Entry]
 Name=Google Chrome
@@ -25,11 +46,11 @@ Categories=Network;WebBrowser;
 Terminal=false
 EOF
 
-cat > "$DESKTOP_DIR/vscode.desktop" <<EOF
+cat > "$DESKTOP_DIR/visual-studio-code.desktop" <<EOF
 [Desktop Entry]
 Name=Visual Studio Code
 Exec=/snap/bin/code
-Icon=code
+Icon=/snap/code/191/usr/share/code/resources/app/resources/linux/code.png
 Type=Application
 Categories=Development;IDE;
 Terminal=false
