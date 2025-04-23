@@ -4,14 +4,20 @@
 sudo apt update
 sudo apt install -y xdg-user-dirs openvpn xfce4-terminal fcitx-mozc fonts-noto-cjk
 
-# 2. Install Google Chrome
+# 2. Set xfce4-terminal as the default terminal emulator for file manager actions like "Open Terminal Here"
+mkdir -p ~/.config/xfce4
+cat <<EOF > ~/.config/xfce4/helpers.rc
+TerminalEmulator=xfce4-terminal
+EOF
+
+# 3. Install Google Chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
 sudo apt install -y /tmp/chrome.deb
 
-# 3. Install Visual Studio Code (Snap version)
+# 4. Install Visual Studio Code (Snap version)
 sudo snap install code --classic
 
-# 4. Create desktop shortcuts
+# 5. Create desktop shortcuts
 DESKTOP_DIR=$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")
 mkdir -p "$DESKTOP_DIR"
 
@@ -67,10 +73,10 @@ EOF
 
 chmod +x "$DESKTOP_DIR"/*.desktop
 
-# 5. Set fcitx as the default input method
+# 6. Set fcitx as the default input method
 im-config -n fcitx
 
-# 6. Configure input environment for XRDP sessions
+# 7. Configure input environment for XRDP sessions
 sudo tee /etc/xrdp/startwm.sh > /dev/null <<'EOF'
 #!/bin/sh
 export GTK_IM_MODULE=fcitx
