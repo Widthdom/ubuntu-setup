@@ -2,7 +2,7 @@
 
 # 1. Install required packages
 sudo apt update
-sudo apt install -y xdg-user-dirs openvpn xfce4-terminal fcitx-mozc fonts-noto-cjk
+sudo apt install -y xdg-user-dirs openvpn fcitx-mozc fonts-noto-cjk
 
 # 2. Set xfce4-terminal as the default terminal emulator for file manager actions like "Open Terminal Here"
 mkdir -p ~/.config/xfce4
