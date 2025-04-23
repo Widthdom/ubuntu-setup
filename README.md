@@ -66,7 +66,7 @@ sudo apt install -y git
 ```
 
 ### GitHub repositoryをclone
-Terminalにて以下のコマンドを実行
+Terminalにて以下のコマンドを実行（基本セッションでは、ホストと仮想マシンでコピー＆ペースト不可のため手打ち）
 ```bash
 git clone https://github.com/Widthdom/ubuntu-setup.git
 cd ubuntu-setup
@@ -77,8 +77,7 @@ Terminalにて以下のコマンドを実行
 ```bash
 ./xrdp-xfce-setup.sh
 ```
-
-このスクリプトは以下を自動で実行する
+上記スクリプトは以下を自動で実行する
 - xfce4 デスクトップ環境のインストール
 - xrdp + Xvnc の構成
 - Wayland 無効化
@@ -89,7 +88,7 @@ Terminalにて以下のコマンドを実行
 After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc.
 ```
 
-これが表示されたら、続けて以下のコマンドを実行（再起動）
+上記が表示されたら、続けて以下のコマンドを実行（再起動）
 ```bash
 sudo reboot
 ```
@@ -130,9 +129,8 @@ cd ~/ubuntu-setup
 ```bash
 ./install-apps-and-shortcuts.sh
 ```
-
 - 実行中にパスワードを求められたら入力
-- このスクリプトは以下を自動で実行する
+- 上記スクリプトは以下を自動で実行する
   - OpenVPN, Google Chrome, Visual Studio Codeのインストール
   - Xfce Terminal, gedit（テキストエディタ）, Remmina（リモートデスクトップ）, Firefox, Google Chrome, Visual Studio Codeのショートカットをデスクトップに作成
   - fcitx（日本語入力）の既定設定
@@ -147,15 +145,19 @@ Setup complete.
 
 ## 7. 注意事項・補足
 
+### 基本セッションについて
+- ホストと仮想マシンでコピー＆ペースト不可
+### 拡張セッションについて
+- ホストと仮想マシンでコピー＆ペースト可能
 - ファイルを右クリックしたときのメニューから「Open With \"Text Editor\"」を実行しても無反応
   - 対象ファイルをテキストエディタのショートカットへドラッグ＆ドロップして開くことで運用回避可能
 
-- サーバとのファイル送受信について
+### サーバとのファイル送受信について
   - FileManagerのアドレスバーに以下のように入力することでアクセス可能
     ```
     smb://[サーバのIPアドレス]
     ```
-- 環境を削除する場合
+### 環境を削除する場合
   - Hyper-V マネージャーから仮想マシンを削除
   - 以下に仮想ハードディスクファイルが残るので削除する
     ```
