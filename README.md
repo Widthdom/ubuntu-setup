@@ -71,7 +71,7 @@ cd ubuntu-setup
 - Wayland 無効化
 - リモートデスクトップ用の起動設定
 
-### 実行後の表示がこちら：
+### 実行後の表示：
 ```
 After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc.
 ```
