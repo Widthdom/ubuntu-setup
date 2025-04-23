@@ -59,4 +59,4 @@ echo
 echo "Setup completed."
 echo "Please reboot the system to apply Wayland configuration changes:"
 echo "    sudo reboot"
-echo "After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc.""
+echo "After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc."
