@@ -1,86 +1,126 @@
-# Ubuntu 20.04 Remote Desktop Setup (with Japanese Input)
+# Ubuntu 20.04 開発環境セットアップ手順（Windows + Hyper-V）
 
-This repository provides scripts to quickly set up a fully functional remote desktop environment on **Ubuntu 20.04 LTS (Focal Fossa)** with:
+## 0. 前提条件
+- Cドライブに 10GB 以上の空き容量があること
 
-- XRDP (Xvnc extended session)
-- XFCE desktop
-- Google Chrome
-- Visual Studio Code
-- Japanese input via fcitx + Mozc
+## 1. Hyper-V 機能の有効化手順
 
-> ⚠️ These scripts are intended **only for Ubuntu 20.04**.  
-> They will not work as-is on Ubuntu 22.04 or later.
+Windows の Hyper-V 機能が無効になっている場合は、以下の手順で有効化する：
+
+1. スタートメニューで「Windows の機能の有効化または無効化」と入力し起動
+2. 一覧の中から **「Hyper-V」** にチェックを入れる
+   - 「Hyper-V プラットフォーム」と「Hyper-V 管理ツール」両方にチェックが入っていることを確認
+3. 「OK」をクリックし、再起動を求められた場合は PC を再起動
 
 ---
 
-## 🛠️ How to Use
+## 2. 仮想マシンの準備
 
-### 1. Prepare a fresh Ubuntu 20.04 virtual machine (e.g., on Hyper-V)
+### Hyper-V マネージャーを起動
+1. スタートメニューで "Hyper-V マネージャー" を検索し、起動
 
-Make sure to install `git` first:
+### 仮想スイッチの作成
+1. 右側の "操作" パネルで [仮想スイッチ マネージャー] をクリック
+2. [外部] を選択 → "作成"
+3. 名前を **ExternalSwitch** に設定し、使用するネットワークアダプターを選択 → "OK"
 
+### Ubuntu 仮想マシンの作成
+1. [操作] → [クイック作成] を選択
+2. OS イメージは **Ubuntu 20.04** を選択
+3. オプションで仮想スイッチに **ExternalSwitch** を選択
+4. 作成後、仮想マシンの [設定] からメモリ上限を **4096MB（4GB）** に設定
+
+---
+
+## 3. Ubuntu 初期設定
+
+### 仮想マシンの起動
+- 作成した仮想マシンをダブルクリックして起動
+
+### 初期セットアップ
+- 表示される画面に従い、以下を設定：
+  - コンピュータ名
+  - ユーザー名
+  - パスワード
+  - 表示言語に **Japanese** を選択
+
+---
+
+## 4. 基本セッションでの準備
+
+### ターミナルを起動して以下を実行
 ```bash
 sudo apt update
-sudo apt install git
+sudo apt install -y git
 ```
 
-### 2. Clone this repository
-
+### GitHub repositoryをclone
 ```bash
 git clone https://github.com/Widthdom/ubuntu-setup.git
 cd ubuntu-setup
 ```
 
-### 3. Run XRDP + XFCE setup
-
+### `xrdp-xfce-setup.sh` を実行（GUI付きリモート接続環境の構築）
 ```bash
-chmod +x xrdp-xfce-setup.sh
-bash xrdp-xfce-setup.sh
+./xrdp-xfce-setup.sh
 ```
 
-This will configure:
-- XFCE as the desktop environment
-- XRDP for remote desktop with extended session (Xvnc)
-- Japanese input environment via fcitx
+このスクリプトは以下のことを自動で実行する：
+- xfce4 デスクトップ環境のインストール
+- xrdp + Xvnc の構成
+- Wayland 無効化
+- リモートデスクトップ用の起動設定
 
-### 4. Install essential apps and configure shortcuts
-
-```bash
-chmod +x install-apps-and-shortcuts.sh
-bash install-apps-and-shortcuts.sh
+### 実行後の表示がこちら：
+```
+After reboot, use 'Xvnc' session when connecting via Remote Desktop. Then launch fcitx-configtool and add Mozc.
 ```
 
-This installs:
-- Google Chrome
-- Visual Studio Code
-- OpenVPN
-- Japanese fonts
-- Desktop shortcuts
-- Proper fcitx environment variables and autostart (via `/etc/xrdp/startwm.sh`)
+これが表示されたら、以下を実行：
+```bash
+sudo reboot
+```
 
 ---
 
-## 🈁 Enabling Japanese Input
+## 5. 拡張セッションの起動と入力設定
 
-After logging in via Remote Desktop (Xvnc session):
+### Windows 側からリモート接続
+- **拡張セッションを開く（Xvnc）**
+- 解像度を選ぶ画面が表示されたら、適当なサイズを選択
+- 青色の背景のログイン画面が表示されたら、デフォルト「Xorg」となっているプルダウンから「Xvnc」を選び、ユーザ名、パスワードを入力してログイン
 
-1. Launch `fcitx-configtool` from the application menu  
-2. Click `+` and add `Mozc` to the input methods  
-3. Move `Mozc` to the top  
-4. Use `Ctrl + Space` to toggle input
+### xfce Terminal を起動
+- 左上の "アプリケーション" メニューから **Xfce Terminal** を起動
 
----
-
-## ✅ Result
-
-After reboot, your Ubuntu 20.04 environment will support:
-
-- Stable XRDP remote login
-- GUI desktop with Chrome and VSCode
-- Japanese text input via Mozc
+### 日本語入力（Mozc）設定
+```bash
+fcitx-configtool
+```
+- GUIが起動するので、「＋」から **Mozc** を追加 → 適用
 
 ---
 
-## License
+## 6. アプリのインストールとショートカット作成
 
-MIT (or modify as needed)
+### ubuntu-setup フォルダ内へ移動
+```bash
+cd ~/ubuntu-setup
+```
+
+### `install-apps-and-shortcuts.sh` を実行
+```bash
+./install-apps-and-shortcuts.sh
+```
+
+- 実行中にパスワードを求められたら入力
+- このスクリプトは以下を自動で実行する：
+  - OpenVPN, Google Chrome, Visual Studio Codeのインストール
+  - Xfce Terminal, gedit（テキストエディタ）, Remmina（リモートデスクトップ）, Firefox, Google Chrome, Visual Studio Codeのショートカットをデスクトップに作成
+  - fcitx（日本語入力）の既定設定
+
+### 終了メッセージ
+```
+Setup complete.
+```
+と表示されたらセットアップ完了
