@@ -53,4 +53,11 @@ EOF
 
 sudo chmod +x /etc/xrdp/startwm.sh
 
+
+# 7. Set system locale to Japanese
+sudo apt install -y language-pack-ja language-pack-gnome-ja
+sudo update-locale LANG=ja_JP.UTF-8
+
+echo "System locale set to Japanese. Please reboot to apply language changes."
+
 echo "Setup complete. Please log out and log in again via XRDP. Then launch fcitx-configtool and add Mozc."
