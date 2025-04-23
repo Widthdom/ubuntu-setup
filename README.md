@@ -125,7 +125,6 @@ sudo reboot
 ## 5. 拡張セッションの起動
 
 ### Windows 側からリモート接続
-- **拡張セッションを開く（Xvnc）**
 - 解像度を調整する画面が表示されたら、適当なサイズを選択して接続（表示されない場合は、仮想マシン接続画面左上の「拡張セッション」ボタンを押下）
 - 青色の背景のログイン画面が表示されたら、デフォルト「Xorg」となっているプルダウンから「Xvnc」を選び、ユーザ名、パスワードを入力してOKを押下しログイン
 - 「System program problem detected」というダイアログにはCancelで応答
@@ -137,7 +136,7 @@ sudo reboot
 ### Xfce Terminal を起動
 - 左上の "Applications" メニュー → "System" → **Xfce Terminal** を起動
 ### ubuntu-setup フォルダ内へ移動
-- Xfce Terminalにて以下のコマンドを実行
+- Xfce Terminalにて以下のコマンドを実行（拡張セッションでは、ホストと仮想マシンでCtrl+Shift+C コピー＆ Ctrl+Shift+V ペースト可能）
 ```bash
 cd ~/ubuntu-setup
 ```
@@ -161,7 +160,10 @@ chmod +x ./install-apps-and-shortcuts.sh
 ```
 Setup complete.
 ```
-と表示されたらセットアップ完了
+上記が表示されたら、続けて以下のコマンドを実行（再起動）
+```bash
+sudo reboot
+```
 
 ---
 ## 7. 日本語入力設定
@@ -193,7 +195,7 @@ fcitx-configtool
 
 ### 空き容量について
 - 容量が枯渇すると仮想マシンが起動しなくなる
-  - 左上の "Application" メニューから Xfce Terminal を起動し、以下のコマンドで空き容量を確認すること
+  - 左上の "Applications" メニューから Xfce Terminal を起動し、以下のコマンドで空き容量を確認すること
 ```bash
 df -h
 ```

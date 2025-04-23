@@ -5,7 +5,7 @@
 
 echo "[1/6] Installing required packages..."
 sudo apt update
-sudo apt install -y xfce4 xrdp tigervnc-standalone-server dbus-x11 xfce4-terminal fcitx-mozc fonts-noto-cjk
+sudo apt install -y xfce4 xrdp tigervnc-standalone-server dbus-x11 xfce4-terminal fcitx-mozc fcitx-keyboard fonts-noto-cjk
 
 echo "[2/6] Disabling Wayland (required for xrdp)..."
 sudo sed -i 's/^#WaylandEnable=false/WaylandEnable=false/' /etc/gdm3/custom.conf
